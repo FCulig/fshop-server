@@ -13,19 +13,6 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->text('description');
-            $table->integer('quantity');
-            $table->decimal('price');
-            $table->integer('seller_id')->unsigned();
-            $table->foreign('seller_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->timestamps();
-        });
-
         Schema::create('comments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('comment');

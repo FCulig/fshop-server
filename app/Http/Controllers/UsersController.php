@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\User as UserResource;
-use App\Mail\RegistrationMail;
 use App\User;
-use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Mail;
+use Validator;
 
 class UsersController extends Controller
 {
@@ -35,7 +33,7 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -46,7 +44,7 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -57,7 +55,7 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -68,8 +66,8 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -80,7 +78,7 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -92,15 +90,57 @@ class UsersController extends Controller
                 File::delete(public_path("/storage/images/profile-pictures/" . $user->profile_img_url));
             }
 
-            if($user->delete()){
+            if ($user->delete()) {
                 return new UserResource($user);
             }
         }
     }
 
+    public function getUserWithEmail($email)
+    {
+        return User::where('email', $email)->get();
+    }
+
+    public function getUserWithUsername($username)
+    {
+        return User::where('username', $username)->get();
+    }
+
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $isValid = $this->validateUserCreation($request);
+
+        if($isValid === true){
+            $user = $this->createUser($request);
+            return $this->saveUser($user);
+        }else{
+            return $isValid;
+        }
+    }
+
+    private function validateUserCreation($request)
+    {
+        $validator = $this->makeRegisterRequestValidator($request);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+
+        $user = $this->getUserWithEmail($request->email);
+        if ($user->count() != 0) {
+            return response(['duplicateEmail' => 'User with that email already exists']);
+        }
+
+        $user = $this->getUserWithUsername($request->username);
+        if ($user->count() != 0) {
+            return response(['duplicateUsername' => 'User with that username already exists']);
+        }
+
+        return true;
+    }
+
+    private function makeRegisterRequestValidator($request)
+    {
+        return Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
             'username' => 'required',
@@ -110,13 +150,11 @@ class UsersController extends Controller
             'c_password' => 'required|same:password',
             'profile_image' => 'image|nullable|max:1999',
         ]);
+    }
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
-        }
-
+    private function createUser($request)
+    {
         $user = new User;
-
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->username = $request->username;
@@ -124,24 +162,39 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->role_id = 3;
+        $user->profile_img_url = $this->getFileNameToStoreProfileImage($request);
 
+        return $user;
+    }
+
+    private function getFileNameToStoreProfileImage($request)
+    {
         if ($request->hasFile('profile_image')) {
-            $filenameWithExt = $request->file('profile_image')->getClientOriginalName();
-
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $extenstion = $request->file('profile_image')->getClientOriginalExtension();
-
-            $filenameToStore = $filename . '_' . time() . '.' . $extenstion;
-
+            $filenameToStore = $this->getFileName($request);
             $request->file('profile_image')->storeAs('public/images/profile-pictures', $filenameToStore);
         } else {
             $filenameToStore = 'public/default.png';
         }
 
-        $user->profile_img_url = $filenameToStore;
+        return $filenameToStore;
+    }
 
+    private function getFileName($request)
+    {
+        $filenameWithExt = $request->file('profile_image')->getClientOriginalName();
+
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = $request->file('profile_image')->getClientOriginalExtension();
+
+        return $filename . '_' . time() . '.' . $extension;
+    }
+
+    private function saveUser($user)
+    {
+        //TODO: da return bude succes: user resource
         if ($user->save()) {
-            Mail::to('email@email.com')->send(new RegistrationMail());
+            //TODO: fix mailing
+            //Mail::to('email@email.com')->send(new RegistrationMail());
             return new UserResource($user);
         }
     }
