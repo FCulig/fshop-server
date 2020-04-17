@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\User as UserResource;
+use App\Rules\ValidEmail;
+use App\Rules\ValidUsername;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -122,17 +124,7 @@ class UsersController extends Controller
     {
         $validator = $this->makeRegisterRequestValidator($request);
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
-        }
-
-        $user = $this->getUserWithEmail($request->email);
-        if ($user->count() != 0) {
-            return response(['duplicateEmail' => 'User with that email already exists']);
-        }
-
-        $user = $this->getUserWithUsername($request->username);
-        if ($user->count() != 0) {
-            return response(['duplicateUsername' => 'User with that username already exists']);
+            return response()->json(['error' => $validator->errors()], 409);
         }
 
         return true;
@@ -143,9 +135,9 @@ class UsersController extends Controller
         return Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
-            'username' => 'required',
+            'username' => ['required', new ValidUsername],
             'birth_date' => 'required',
-            'email' => 'required|email',
+            'email' => ['required','email', new ValidEmail],
             'password' => 'required',
             'c_password' => 'required|same:password',
             'profile_image' => 'image|nullable|max:1999',
