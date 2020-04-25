@@ -82,6 +82,12 @@ Route::put('promotion/{id}/approve', 'PromotionRequestsController@approveRequest
 Route::put('promotion/{id}/decline', 'PromotionRequestsController@declineRequest');
 Route::delete('promotion/{id}', 'PromotionRequestsController@destroy');
 
+//Route::get('product', 'ProductsController@index');
+//Route::post('product', 'ProductsController@store');
+Route::get('users/{id}', 'UsersController@show');
+//Route::put('product/{id}', 'ProductsController@update');
+//Route::delete('product/{id}', 'ProductsController@destroy');
+
 //Route::get('roles', 'RolesController@index');
 //Route::post('roles', 'RolesController@store');
 //Route::get('roles/{id}', 'RolesController@show');
@@ -91,3 +97,5 @@ Route::delete('users/{id}', 'UsersController@destroy');
 Route::get('/registrationmail', function(){
     Mail::to('email@email.com')->send(new RegistrationMail("Marko", "Markic"));
 });
+
+Route::get('/profilePicture/{name}', 'ImagesController@profilePicture');

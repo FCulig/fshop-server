@@ -4,6 +4,7 @@
     <list default="true" id="133b8ec6-0a41-4e57-b178-b0cfb977a459" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,6 +187,10 @@
       <workItem from="1586991033612" duration="1045000" />
       <workItem from="1587067806119" duration="4991000" />
       <workItem from="1587154465833" duration="3573000" />
+      <workItem from="1587327113852" duration="1826000" />
+      <workItem from="1587589901305" duration="614000" />
+      <workItem from="1587669814254" duration="2441000" />
+      <workItem from="1587834927443" duration="497000" />
     </task>
     <servers />
   </component>
@@ -209,10 +214,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="261" key="GridCell.Tab.0.right/0.0.1920.1040/1920.309.1360.728@0.0.1920.1040" timestamp="1584457785984" />
-    <state x="848" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1587154473411">
+    <state x="848" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1587835025835">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="848" y="344" key="com.intellij.ide.util.TipDialog/-1920.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1587154473411" />
+    <state x="848" y="344" key="com.intellij.ide.util.TipDialog/-1920.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1587835025835" />
     <state x="636" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.309.1360.728@0.0.1920.1040" timestamp="1584452468099" />
   </component>
 </project>

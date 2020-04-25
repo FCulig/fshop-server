@@ -51,18 +51,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->getUserWithId($id);
     }
 
     /**
@@ -108,6 +97,10 @@ class UsersController extends Controller
         return User::where('username', $username)->get();
     }
 
+    public function getUserWithId($id){
+        return User::FindOrFail($id);
+    }
+
     public function register(Request $request)
     {
         $isValid = $this->validateUserCreation($request);
@@ -140,7 +133,7 @@ class UsersController extends Controller
             'email' => ['required','email', new ValidEmail],
             'password' => 'required',
             'c_password' => 'required|same:password',
-            'profile_image' => 'image|nullable|max:1999',
+            'profile_picture' => 'image|mimes:jpeg,jpg,png|nullable|max:1999',
         ]);
     }
 
@@ -161,11 +154,11 @@ class UsersController extends Controller
 
     private function getFileNameToStoreProfileImage($request)
     {
-        if ($request->hasFile('profile_image')) {
+        if ($request->hasFile('profile_picture')) {
             $filenameToStore = $this->getFileName($request);
-            $request->file('profile_image')->storeAs('public/images/profile-pictures', $filenameToStore);
+            $request->file('profile_picture')->storeAs('public/images/profile-pictures', $filenameToStore);
         } else {
-            $filenameToStore = 'public/default.png';
+            $filenameToStore = 'default.png';
         }
 
         return $filenameToStore;
@@ -173,10 +166,10 @@ class UsersController extends Controller
 
     private function getFileName($request)
     {
-        $filenameWithExt = $request->file('profile_image')->getClientOriginalName();
+        $filenameWithExt = $request->file('profile_picture')->getClientOriginalName();
 
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        $extension = $request->file('profile_image')->getClientOriginalExtension();
+        $extension = $request->file('profile_picture')->getClientOriginalExtension();
 
         return $filename . '_' . time() . '.' . $extension;
     }
