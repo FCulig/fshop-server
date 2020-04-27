@@ -71,7 +71,7 @@ Route::delete('roles/{id}', 'RolesController@destroy');
 Route::get('product', 'ProductsController@index');
 Route::post('product', 'ProductsController@store');
 Route::get('product/{id}', 'ProductsController@show');
-Route::put('product/{id}', 'ProductsController@update');
+Route::post('product/{id}', 'ProductsController@update');
 Route::delete('product/{id}', 'ProductsController@destroy');
 
 Route::get('promotion', 'PromotionRequestsController@index');
@@ -84,7 +84,9 @@ Route::delete('promotion/{id}', 'PromotionRequestsController@destroy');
 
 //Route::get('product', 'ProductsController@index');
 //Route::post('product', 'ProductsController@store');
+Route::get('users', 'UsersController@index');
 Route::get('users/{id}', 'UsersController@show');
+Route::get('users/{id}/products', 'UsersController@getUsersProducts');
 //Route::put('product/{id}', 'ProductsController@update');
 //Route::delete('product/{id}', 'ProductsController@destroy');
 
@@ -99,3 +101,4 @@ Route::get('/registrationmail', function(){
 });
 
 Route::get('/profilePicture/{name}', 'ImagesController@profilePicture');
+Route::get('/productImage/{id}', 'ImagesController@productImage');

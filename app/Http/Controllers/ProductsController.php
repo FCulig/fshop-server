@@ -15,7 +15,23 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        $products = Product::all();
+        $productsResources = array();
+        foreach ($products as $product){
+            $productsResources[] = new \App\Http\Resources\Product($product);
+        }
+
+        return $productsResources;
+    }
+
+    private function getFileName($request)
+    {
+        $filenameWithExt = $request->file('product_images')->getClientOriginalName();
+
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = $request->file('product_images')->getClientOriginalExtension();
+
+        return $filename . '_' . time() . '.' . $extension;
     }
 
     /**
@@ -38,7 +54,6 @@ class ProductsController extends Controller
         if ($product->save()) {
             $this->saveImages($request->file('product_images'), $product->id);
 
-            //TODO: vracanje liste slika
             return new \App\Http\Resources\Product($product);
         }
     }
@@ -51,7 +66,11 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        return Product::with('productImages')->findOrFail($id);
+        return new \App\Http\Resources\Product($this->getProductWithId($id));
+    }
+
+    public function getProductWithId($id){
+        return Product::findOrFail($id);
     }
 
     /**
@@ -73,8 +92,11 @@ class ProductsController extends Controller
         $product->category_id = $request->input('category_id');
 
         if ($product->save()) {
-            //TOOD: obrisi stare slike prije ovog
-            $this->saveImages($request->file('product_images'), $product->id);
+            if($request->hasFile('product_images')){
+                $productImagesController = new ProductImagesController;
+                $productImagesController->deleteImages($id);
+                $this->saveImages($request->file('product_images'), $product->id);
+            }
 
             return new \App\Http\Resources\Product($product);
         }

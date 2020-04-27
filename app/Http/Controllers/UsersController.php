@@ -66,6 +66,16 @@ class UsersController extends Controller
         //
     }
 
+    public function getUsersProducts(Request $request, $id)
+    {
+        $products = $this->getUserWithId($id)->products;
+        $productsResources = array();
+        foreach ($products as $product){
+            $productsResources[] = new \App\Http\Resources\Product($product);
+        }
+        return $productsResources;
+    }
+
     /**
      * Remove the specified resource from storage.
      *
