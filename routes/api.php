@@ -29,6 +29,7 @@ Route::post('/register', 'UsersController@register');
 Route::get('catgroup', 'CategoryGroupsController@index');
 Route::post('catgroup', 'CategoryGroupsController@store');
 Route::get('catgroup/{id}', 'CategoryGroupsController@show');
+Route::get('catgroup/{id}/categories', 'CategoryGroupsController@getCategoriesUnderGroup');
 Route::put('catgroup/{id}', 'CategoryGroupsController@update');
 Route::delete('catgroup/{id}', 'CategoryGroupsController@destroy');
 
@@ -86,8 +87,10 @@ Route::delete('promotion/{id}', 'PromotionRequestsController@destroy');
 //Route::post('product', 'ProductsController@store');
 Route::get('users', 'UsersController@index');
 Route::get('users/{id}', 'UsersController@show');
+Route::put('users/{id}/promote', 'UsersController@promote');
+Route::put('users/{id}/demote', 'UsersController@demote');
 Route::get('users/{id}/products', 'UsersController@getUsersProducts');
-//Route::put('product/{id}', 'ProductsController@update');
+Route::post('users/{id}', 'UsersController@update');
 //Route::delete('product/{id}', 'ProductsController@destroy');
 
 //Route::get('roles', 'RolesController@index');

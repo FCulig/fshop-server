@@ -84,4 +84,13 @@ class CategoryGroupsController extends Controller
             //TODO:
         }
     }
+
+    public function getCategoryGroupWithId($id){
+        return CategoryGroup::findOrFail($id);
+    }
+
+    public function getCategoriesUnderGroup($id){
+        $categoryGroup = $this->getCategoryGroupWithId($id);
+        return $categoryGroup->categories;
+    }
 }

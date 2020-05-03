@@ -15,7 +15,13 @@ class PromotionRequestsController extends Controller
      */
     public function index()
     {
-        return PromotionRequest::all();
+        $requests = PromotionRequest::all();
+        $requestResources = array();
+        foreach ($requests as $req){
+            $requestResources[] = new \App\Http\Resources\PromotionRequest($req);
+        }
+
+        return $requestResources;
     }
 
     /**
@@ -28,7 +34,6 @@ class PromotionRequestsController extends Controller
     {
         $promotionRequest = new PromotionRequest;
 
-        $promotionRequest->text = $request->input('text');
         $promotionRequest->user_id = $request->input('user_id');
 
         if($promotionRequest->save()){
@@ -60,7 +65,6 @@ class PromotionRequestsController extends Controller
 
         if(is_null($promotionRequest->result) != false){
             $promotionRequest->id = $id;
-            $promotionRequest->text = $request->input('text');
             $promotionRequest->user_id = $request->input('user_id');
             $promotionRequest->result = null;
 

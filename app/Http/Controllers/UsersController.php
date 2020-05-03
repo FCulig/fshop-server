@@ -7,6 +7,7 @@ use App\Rules\ValidEmail;
 use App\Rules\ValidUsername;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Validator;
 
@@ -63,14 +64,59 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = $this->getUserWithId($id);
+
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->username = $request->username;
+        $user->birth_date = $request->birth_date;
+
+        if ($user->email != $request->email) {
+            $checkUser = $this->getUserWithEmail($request->email);
+            if ($checkUser->count() == 0) {
+                $user->email = $request->email;
+            } else {
+                return response()->json(['message' => 'email']);
+            }
+        }
+
+        /*if ($request->has(['password', 'c_password', 'current_password'])) {
+            return Auth::user();
+            $current_password = Auth::User()->password;
+
+            if (Auth::attempt(['email' => $user->email, 'password' => $request->current_password])) {
+                return "ok";
+
+                if ($request->password == $request->c_password) {
+                    $user->password = bcrypt($request->password);
+                }else{
+                    return "da";
+                }
+            } else {
+                return response()->json(['message' => 'current_password']);
+            }
+        }else{
+            return "asd";
+        }*/
+
+        if ($request->hasFile('profile_picture')) {
+            if ($user->profile_img_url != 'default.png') {
+                File::delete(public_path("/storage/images/profile-pictures/" . $user->profile_img_url));
+            }
+            $user->profile_img_url = $this->getFileNameToStoreProfileImage($request);
+        }
+
+        if ($user->save()) {
+
+            return new \App\Http\Resources\User($user);
+        }
     }
 
     public function getUsersProducts(Request $request, $id)
     {
         $products = $this->getUserWithId($id)->products;
         $productsResources = array();
-        foreach ($products as $product){
+        foreach ($products as $product) {
             $productsResources[] = new \App\Http\Resources\Product($product);
         }
         return $productsResources;
@@ -107,7 +153,8 @@ class UsersController extends Controller
         return User::where('username', $username)->get();
     }
 
-    public function getUserWithId($id){
+    public function getUserWithId($id)
+    {
         return User::FindOrFail($id);
     }
 
@@ -115,10 +162,10 @@ class UsersController extends Controller
     {
         $isValid = $this->validateUserCreation($request);
 
-        if($isValid === true){
+        if ($isValid === true) {
             $user = $this->createUser($request);
             return $this->saveUser($user);
-        }else{
+        } else {
             return $isValid;
         }
     }
@@ -140,7 +187,7 @@ class UsersController extends Controller
             'last_name' => 'required',
             'username' => ['required', new ValidUsername],
             'birth_date' => 'required',
-            'email' => ['required','email', new ValidEmail],
+            'email' => ['required', 'email', new ValidEmail],
             'password' => 'required',
             'c_password' => 'required|same:password',
             'profile_picture' => 'image|mimes:jpeg,jpg,png|nullable|max:1999',
@@ -191,6 +238,24 @@ class UsersController extends Controller
             //TODO: fix mailing
             //Mail::to('email@email.com')->send(new RegistrationMail());
             return new UserResource($user);
+        }
+    }
+
+    public function promote($id)
+    {
+        $user = $this->getUserWithId($id);
+        $user->role_id = 2;
+        if ($user->save()) {
+            return $user;
+        }
+    }
+
+    public function demote($id)
+    {
+        $user = $this->getUserWithId($id);
+        $user->role_id = 3;
+        if ($user->save()) {
+            return $user;
         }
     }
 }

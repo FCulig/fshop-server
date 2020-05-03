@@ -3,11 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="133b8ec6-0a41-4e57-b178-b0cfb977a459" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ImagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ImagesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoriesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoriesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoryGroupsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoryGroupsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PromotionRequestsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PromotionRequestsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/CategoryResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/CategoryResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/PromotionRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/PromotionRequest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -196,6 +198,13 @@
       <workItem from="1587669814254" duration="2441000" />
       <workItem from="1587834927443" duration="10241000" />
       <workItem from="1587934893654" duration="3133000" />
+      <workItem from="1588107281942" duration="1652000" />
+      <workItem from="1588154587512" duration="822000" />
+      <workItem from="1588199220834" duration="1119000" />
+      <workItem from="1588276382968" duration="4097000" />
+      <workItem from="1588286603851" duration="845000" />
+      <workItem from="1588323412065" duration="991000" />
+      <workItem from="1588369449775" duration="1231000" />
     </task>
     <servers />
   </component>
@@ -219,10 +228,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="261" key="GridCell.Tab.0.right/0.0.1920.1040/1920.309.1360.728@0.0.1920.1040" timestamp="1584457785984" />
-    <state x="848" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1587934898476">
+    <state x="848" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1588369535427">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="848" y="344" key="com.intellij.ide.util.TipDialog/-1920.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1587934898476" />
+    <state x="848" y="344" key="com.intellij.ide.util.TipDialog/-1920.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1588369535427" />
     <state x="636" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.309.1360.728@0.0.1920.1040" timestamp="1584452468099" />
+    <state x="1087" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1588323608208">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="1087" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1588323608208" />
   </component>
 </project>

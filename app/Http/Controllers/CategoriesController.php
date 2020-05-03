@@ -16,7 +16,13 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        return Category::all();
+        $categories = Category::all();
+        $categiresResources = array();
+
+        foreach ($categories as $cat){
+            $categiresResources[] = new CategoryResource($cat);
+        }
+        return $categiresResources;
     }
 
     /**
