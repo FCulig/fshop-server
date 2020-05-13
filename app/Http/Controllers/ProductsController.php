@@ -137,4 +137,17 @@ class ProductsController extends Controller
             $img->storeAs('public/images/product-images', $filenameToStore);
         }
     }
+
+    public function buyProduct($productId, $quantity){
+        $product = $this->getProductWithId($productId);
+
+        if($product->quantity > $quantity){
+            $product->quantity = $product->quantity - $quantity;
+            if($product->save()){
+                return true;
+            }
+        }else {
+            return false;
+        }
+    }
 }

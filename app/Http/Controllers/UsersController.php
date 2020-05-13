@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\Cart;
 use App\Http\Resources\User as UserResource;
 use App\Rules\ValidEmail;
 use App\Rules\ValidUsername;
@@ -24,27 +27,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param int $id
@@ -62,7 +44,7 @@ class UsersController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
         $user = $this->getUserWithId($id);
 
@@ -80,25 +62,6 @@ class UsersController extends Controller
             }
         }
 
-        /*if ($request->has(['password', 'c_password', 'current_password'])) {
-            return Auth::user();
-            $current_password = Auth::User()->password;
-
-            if (Auth::attempt(['email' => $user->email, 'password' => $request->current_password])) {
-                return "ok";
-
-                if ($request->password == $request->c_password) {
-                    $user->password = bcrypt($request->password);
-                }else{
-                    return "da";
-                }
-            } else {
-                return response()->json(['message' => 'current_password']);
-            }
-        }else{
-            return "asd";
-        }*/
-
         if ($request->hasFile('profile_picture')) {
             if ($user->profile_img_url != 'default.png') {
                 File::delete(public_path("/storage/images/profile-pictures/" . $user->profile_img_url));
@@ -107,7 +70,6 @@ class UsersController extends Controller
         }
 
         if ($user->save()) {
-
             return new \App\Http\Resources\User($user);
         }
     }
@@ -133,6 +95,7 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
 
         if (isset($user)) {
+            //TODO: brisanje komentara, proizvoda, transakcija? - jer se i drugom korisniku obriše
             if ($user->profile_img_url != 'default.png') {
                 File::delete(public_path("/storage/images/profile-pictures/" . $user->profile_img_url));
             }
@@ -158,50 +121,19 @@ class UsersController extends Controller
         return User::FindOrFail($id);
     }
 
-    public function register(Request $request)
-    {
-        $isValid = $this->validateUserCreation($request);
-
-        if ($isValid === true) {
-            $user = $this->createUser($request);
-            return $this->saveUser($user);
-        } else {
-            return $isValid;
-        }
+    public function usersCart($userId){
+        return new Cart($this->getUserWithId($userId)->cart);
     }
 
-    private function validateUserCreation($request)
+    public function register(StoreUserRequest $request)
     {
-        $validator = $this->makeRegisterRequestValidator($request);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 409);
-        }
-
-        return true;
-    }
-
-    private function makeRegisterRequestValidator($request)
-    {
-        return Validator::make($request->all(), [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'username' => ['required', new ValidUsername],
-            'birth_date' => 'required',
-            'email' => ['required', 'email', new ValidEmail],
-            'password' => 'required',
-            'c_password' => 'required|same:password',
-            'profile_picture' => 'image|mimes:jpeg,jpg,png|nullable|max:1999',
-        ]);
+        $user = $this->createUser($request);
+        return $this->saveUser($user);
     }
 
     private function createUser($request)
     {
-        $user = new User;
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->username = $request->username;
-        $user->birth_date = $request->birth_date;
-        $user->email = $request->email;
+        $user =  new User($request->all());
         $user->password = bcrypt($request->password);
         $user->role_id = 3;
         $user->profile_img_url = $this->getFileNameToStoreProfileImage($request);
@@ -233,8 +165,9 @@ class UsersController extends Controller
 
     private function saveUser($user)
     {
-        //TODO: da return bude succes: user resource
         if ($user->save()) {
+            $cartController = new CartsController();
+            $cartController->store($user->id);
             //TODO: fix mailing
             //Mail::to('email@email.com')->send(new RegistrationMail());
             return new UserResource($user);

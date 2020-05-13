@@ -43,6 +43,6 @@ class ValidUsername implements Rule
      */
     public function message()
     {
-        return 'Username is taken.';
+        return 'Već postoji korisnik s ovim korisničkim imenom';
     }
 }

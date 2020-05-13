@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'username', 'birth_date', 'email',
     ];
 
     /**
@@ -56,5 +56,15 @@ class User extends Authenticatable
     public function promotionRequests()
     {
         return $this->hasMany('App\PromotionRequest', 'user_id', 'id');
+    }
+
+    public function cart()
+    {
+        return $this->hasOne('App\Cart', 'user_id', 'id');
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany('App\Transcation', 'user_id', 'id');
     }
 }

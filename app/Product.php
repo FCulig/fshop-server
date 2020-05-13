@@ -20,4 +20,9 @@ class Product extends Model
     {
         return $this->hasMany('App\ProductImage', 'product_id', 'id');
     }
+
+    public function transactions()
+    {
+        return $this->hasMany('App\Transcation', 'item_id', 'id');
+    }
 }

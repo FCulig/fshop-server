@@ -43,6 +43,6 @@ class ValidEmail implements Rule
      */
     public function message()
     {
-        return 'Account with this email already exists.';
+        return 'Već postoji korisnik s ovom email adresom';
     }
 }

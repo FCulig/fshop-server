@@ -39,18 +39,6 @@ Route::get('categories/{id}', 'CategoriesController@show');
 Route::put('categories/{id}', 'CategoriesController@update');
 Route::delete('categories/{id}', 'CategoriesController@destroy');
 
-Route::get('countries', 'CountriesController@index');
-Route::post('countries', 'CountriesController@store');
-Route::get('countries/{id}', 'CountriesController@show');
-Route::put('countries/{id}', 'CountriesController@update');
-Route::delete('countries/{id}', 'CountriesController@destroy');
-
-Route::get('cities', 'CitiesController@index');
-Route::post('cities', 'CitiesController@store');
-Route::get('cities/{id}', 'CitiesController@show');
-Route::put('cities/{id}', 'CitiesController@update');
-Route::delete('cities/{id}', 'CitiesController@destroy');
-
 Route::get('statuses', 'TransactionStatusesController@index');
 Route::post('statuses', 'TransactionStatusesController@store');
 Route::get('statuses/{id}', 'TransactionStatusesController@show');
@@ -73,6 +61,7 @@ Route::get('product', 'ProductsController@index');
 Route::post('product', 'ProductsController@store');
 Route::get('product/{id}', 'ProductsController@show');
 Route::post('product/{id}', 'ProductsController@update');
+Route::post('product/{productId}/cart/{cartId}', 'CartItemsController@store');
 Route::delete('product/{id}', 'ProductsController@destroy');
 
 Route::get('promotion', 'PromotionRequestsController@index');
@@ -83,21 +72,30 @@ Route::put('promotion/{id}/approve', 'PromotionRequestsController@approveRequest
 Route::put('promotion/{id}/decline', 'PromotionRequestsController@declineRequest');
 Route::delete('promotion/{id}', 'PromotionRequestsController@destroy');
 
-//Route::get('product', 'ProductsController@index');
-//Route::post('product', 'ProductsController@store');
+Route::get('cart', 'CartsController@index');
+Route::get('cart/{id}/items', 'CartsController@cartItems');
+
+Route::delete('cart-item/{itemId}', 'CartItemsController@destroy');
+
 Route::get('users', 'UsersController@index');
 Route::get('users/{id}', 'UsersController@show');
+Route::get('users/{id}/transactions', 'TransactionsController@usersTransactions');
+Route::get('users/{id}/orders', 'TransactionsController@usersOrders');
+Route::get('users/{id}/cart', 'UsersController@usersCart');
 Route::put('users/{id}/promote', 'UsersController@promote');
 Route::put('users/{id}/demote', 'UsersController@demote');
 Route::get('users/{id}/products', 'UsersController@getUsersProducts');
 Route::post('users/{id}', 'UsersController@update');
-//Route::delete('product/{id}', 'ProductsController@destroy');
-
-//Route::get('roles', 'RolesController@index');
-//Route::post('roles', 'RolesController@store');
-//Route::get('roles/{id}', 'RolesController@show');
-//Route::put('roles/{id}', 'RolesController@update');
+Route::post('users/{userId}/buy/{productId}', 'UsersController@buyProduct');
 Route::delete('users/{id}', 'UsersController@destroy');
+
+Route::get('transactions', 'TransactionsController@index');
+Route::post('transactions', 'TransactionsController@store');
+Route::get('transactions/{id}', 'TransactionsController@show');
+Route::put('transactions/{id}', 'TransactionsController@update');
+Route::put('transactions/{id}/cancel', 'TransactionsController@cancelTransaction');
+Route::put('transactions/{id}/ship', 'TransactionsController@shipTransaction');
+Route::delete('transactions/{id}', 'TransactionsController@destroy');
 
 Route::get('/registrationmail', function(){
     Mail::to('email@email.com')->send(new RegistrationMail("Marko", "Markic"));
