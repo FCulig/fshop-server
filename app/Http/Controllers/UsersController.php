@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\Cart;
 use App\Http\Resources\User as UserResource;
-use App\Rules\ValidEmail;
-use App\Rules\ValidUsername;
+use App\PromotionRequest;
 use App\User;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -34,7 +35,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        return $this->getUserWithId($id);
+        return new UserResource($this->getUserWithId($id));
     }
 
     /**
@@ -121,7 +122,8 @@ class UsersController extends Controller
         return User::FindOrFail($id);
     }
 
-    public function usersCart($userId){
+    public function usersCart($userId)
+    {
         return new Cart($this->getUserWithId($userId)->cart);
     }
 
@@ -133,7 +135,7 @@ class UsersController extends Controller
 
     private function createUser($request)
     {
-        $user =  new User($request->all());
+        $user = new User($request->all());
         $user->password = bcrypt($request->password);
         $user->role_id = 3;
         $user->profile_img_url = $this->getFileNameToStoreProfileImage($request);
@@ -174,6 +176,26 @@ class UsersController extends Controller
         }
     }
 
+    public function changePassword(ChangePasswordRequest $request, $userId)
+    {
+        if (Auth::guard('api')->check()) {
+            if (\Hash::check($request->old_password, Auth::guard('api')->user()->password)) {
+                $user = User::findOrFail(Auth::guard('api')->user()->id);
+                $user->password = bcrypt($request->password);
+
+                if($user->save()) {
+                    return $user;
+                }
+            } else {
+                return response()->json("Stara lozinka nije točna!", 422);
+            }
+        } else {
+            return "Nije loginan";
+        }
+        //return redirect()->to('/')->with('alert-success','Password changed successfully !');
+        //return $request->all();
+    }
+
     public function promote($id)
     {
         $user = $this->getUserWithId($id);
@@ -189,6 +211,17 @@ class UsersController extends Controller
         $user->role_id = 3;
         if ($user->save()) {
             return $user;
+        }
+    }
+
+    public function isEligibleForPromotion($id)
+    {
+        $promotrionRequests = PromotionRequest::all()->where('user_id', $id);
+
+        if (sizeof($promotrionRequests) > 0 && User::findOrFail($id)->number_sold_items > 10) {
+            return "true";
+        } else {
+            return "false";
         }
     }
 }

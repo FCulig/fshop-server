@@ -32,12 +32,19 @@ class PromotionRequestsController extends Controller
      */
     public function store(Request $request)
     {
-        $promotionRequest = new PromotionRequest;
+        $usersController = new UsersController();
+        $canSubmit = $usersController->isEligibleForPromotion($request->input('user_id'));
 
-        $promotionRequest->user_id = $request->input('user_id');
+        if($canSubmit == "true"){
+            $promotionRequest = new PromotionRequest;
 
-        if($promotionRequest->save()){
-            return new \App\Http\Resources\PromotionRequest($promotionRequest);
+            $promotionRequest->user_id = $request->input('user_id');
+
+            if($promotionRequest->save()){
+                return new \App\Http\Resources\PromotionRequest($promotionRequest);
+            }
+        }else{
+            return response("Korisnik ne može poslati zahtjev za promociju!",'409');
         }
     }
 

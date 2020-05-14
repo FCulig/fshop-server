@@ -16,7 +16,7 @@ class PromotionRequest extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => $this->user,
+            'user' => new User($this->user),
             'result' => $this->result,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

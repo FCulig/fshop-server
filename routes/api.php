@@ -79,6 +79,7 @@ Route::delete('cart-item/{itemId}', 'CartItemsController@destroy');
 
 Route::get('users', 'UsersController@index');
 Route::get('users/{id}', 'UsersController@show');
+Route::get('users/{id}/can-promote', 'UsersController@isEligibleForPromotion');
 Route::get('users/{id}/transactions', 'TransactionsController@usersTransactions');
 Route::get('users/{id}/orders', 'TransactionsController@usersOrders');
 Route::get('users/{id}/cart', 'UsersController@usersCart');
@@ -88,6 +89,7 @@ Route::get('users/{id}/products', 'UsersController@getUsersProducts');
 Route::post('users/{id}', 'UsersController@update');
 Route::post('users/{userId}/buy/{productId}', 'UsersController@buyProduct');
 Route::delete('users/{id}', 'UsersController@destroy');
+Route::put('users/{id}/change-password', 'UsersController@changePassword');
 
 Route::get('transactions', 'TransactionsController@index');
 Route::post('transactions', 'TransactionsController@store');
