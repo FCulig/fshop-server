@@ -19,4 +19,10 @@ class ImagesController extends Controller
         $pathToFile = storage_path('/app/public/images/product-images/' . $productImg->url);
         return response()->file($pathToFile);
     }
+
+    public function categoryImage($name)
+    {
+        $pathToFile = storage_path('/app/public/images/category-images/' . $name);
+        return response()->file($pathToFile);
+    }
 }

@@ -36,7 +36,7 @@ Route::delete('catgroup/{id}', 'CategoryGroupsController@destroy');
 Route::get('categories', 'CategoriesController@index');
 Route::post('categories', 'CategoriesController@store');
 Route::get('categories/{id}', 'CategoriesController@show');
-Route::put('categories/{id}', 'CategoriesController@update');
+Route::post('categories/{id}', 'CategoriesController@update');
 Route::delete('categories/{id}', 'CategoriesController@destroy');
 
 Route::get('statuses', 'TransactionStatusesController@index');
@@ -105,3 +105,4 @@ Route::get('/registrationmail', function(){
 
 Route::get('/profilePicture/{name}', 'ImagesController@profilePicture');
 Route::get('/productImage/{id}', 'ImagesController@productImage');
+Route::get('/categoryImage/{name}', 'ImagesController@categoryImage');
