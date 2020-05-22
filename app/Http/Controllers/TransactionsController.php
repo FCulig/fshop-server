@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
 use App\Http\Requests\NewTransactionRequest;
 use App\Http\Resources\Transaction;
 use App\Transcation;

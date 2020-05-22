@@ -4,7 +4,12 @@
     <list default="true" id="133b8ec6-0a41-4e57-b178-b0cfb977a459" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoriesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoriesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoryGroupsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoryGroupsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ImagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ImagesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TransactionsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TransactionsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/CategoryGroup.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/CategoryGroup.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Resources/CategoryResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/CategoryResource.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
@@ -212,6 +217,11 @@
       <workItem from="1589444769848" duration="3087000" />
       <workItem from="1589481157748" duration="3902000" />
       <workItem from="1589546531869" duration="2378000" />
+      <workItem from="1589640795230" duration="1511000" />
+      <workItem from="1589658869815" duration="2040000" />
+      <workItem from="1589802458272" duration="3224000" />
+      <workItem from="1589880100530" duration="1750000" />
+      <workItem from="1589897200015" duration="514000" />
     </task>
     <servers />
   </component>
@@ -219,10 +229,15 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1010" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1589488026052">
+    <state x="1010" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1589803818712">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="1010" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/-1920.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1589488026052" />
+    <state x="1010" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/2560.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1589803818712" />
+    <state x="903" y="22" key="CommitChangelistDialog2" timestamp="1589803886243">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="903" y="22" key="CommitChangelistDialog2/2560.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1589803886243" />
     <state width="1877" height="261" key="GridCell.Tab.0.bottom" timestamp="1584457785984">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -239,11 +254,12 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="261" key="GridCell.Tab.0.right/0.0.1920.1040/1920.309.1360.728@0.0.1920.1040" timestamp="1584457785984" />
-    <state x="848" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1589546537990">
+    <state x="848" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1589897228825">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="848" y="344" key="com.intellij.ide.util.TipDialog/-1920.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1589546537990" />
+    <state x="848" y="344" key="com.intellij.ide.util.TipDialog/-1920.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1589658885874" />
     <state x="636" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.309.1360.728@0.0.1920.1040" timestamp="1584452468099" />
+    <state x="848" y="344" key="com.intellij.ide.util.TipDialog/2560.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1589897228825" />
     <state x="1087" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1588323608208">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>

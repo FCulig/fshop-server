@@ -15,7 +15,14 @@ class CategoryGroupsController extends Controller
      */
     public function index()
     {
-        return CategoryGroup::all();
+        $groups = CategoryGroup::all();
+        $groupsResource = array();
+
+        foreach ($groups as $group){
+            $groupsResource[] = new CategoryGroupResource($group);
+        }
+
+        return $groupsResource;
     }
 
     /**

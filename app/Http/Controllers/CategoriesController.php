@@ -37,22 +37,10 @@ class CategoriesController extends Controller
 
         $category->name = $request->input('name');
         $category->group_id = $request->input('group_id');
-        $filenameToStore = $this->getFileName($request);
-        $category->img_url = $filenameToStore;
-        $request->file('image')->storeAs('public/images/category-images', $filenameToStore);
 
         if ($category->save()) {
             return new CategoryResource($category);
         }
-    }
-
-    private function getFileName($request)
-    {
-        $filenameWithExt = $request->file('image')->getClientOriginalName();
-        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        $extension = $request->file('image')->getClientOriginalExtension();
-
-        return $filename . '_' . time() . '.' . $extension;
     }
 
     /**
@@ -80,12 +68,6 @@ class CategoriesController extends Controller
         $category->id = $id;
         $category->name = $request->input('name');
         $category->group_id = $request->input('group_id');
-
-        if($request->hasFile('image')){
-            $filenameToStore = $this->getFileName($request);
-            $category->img_url = $filenameToStore;
-            $request->file('image')->storeAs('public/images/category-images', $filenameToStore);
-        }
 
         if ($category->save()) {
             return new CategoryResource($category);

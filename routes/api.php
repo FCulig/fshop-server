@@ -61,6 +61,7 @@ Route::get('product', 'ProductsController@index');
 Route::post('product', 'ProductsController@store');
 Route::get('product/{id}', 'ProductsController@show');
 Route::post('product/{id}', 'ProductsController@update');
+Route::put('product/{id}/restock', 'ProductsController@restock');
 Route::post('product/{productId}/cart/{cartId}', 'CartItemsController@store');
 Route::delete('product/{id}', 'ProductsController@destroy');
 
@@ -73,6 +74,7 @@ Route::put('promotion/{id}/decline', 'PromotionRequestsController@declineRequest
 Route::delete('promotion/{id}', 'PromotionRequestsController@destroy');
 
 Route::get('cart', 'CartsController@index');
+Route::get('cart/{id}', 'CartsController@getCartWithId');
 Route::get('cart/{id}/items', 'CartsController@cartItems');
 
 Route::delete('cart-item/{itemId}', 'CartItemsController@destroy');
@@ -105,4 +107,3 @@ Route::get('/registrationmail', function(){
 
 Route::get('/profilePicture/{name}', 'ImagesController@profilePicture');
 Route::get('/productImage/{id}', 'ImagesController@productImage');
-Route::get('/categoryImage/{name}', 'ImagesController@categoryImage');

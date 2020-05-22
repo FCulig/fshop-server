@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\ProductImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {
@@ -13,9 +14,22 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $products = Product::all()->where('quantity','>', 0);
+
+        if($request->query('category')){
+            $products = $products->where('category_id', $request->query('category'));
+        }
+
+        if($request->query('min-price')){
+            $products = $products->where('price', ">=" ,$request->query('min-price'));
+        }
+
+        if($request->query('max-price')){
+            $products = $products->where('price', "<=" ,$request->query('max-price'));
+        }
+
         $productsResources = array();
         foreach ($products as $product){
             $productsResources[] = new \App\Http\Resources\Product($product);
@@ -141,13 +155,22 @@ class ProductsController extends Controller
     public function buyProduct($productId, $quantity){
         $product = $this->getProductWithId($productId);
 
-        if($product->quantity > $quantity){
+        if($product->quantity >= $quantity){
             $product->quantity = $product->quantity - $quantity;
             if($product->save()){
                 return true;
             }
         }else {
             return false;
+        }
+    }
+
+    public function restock(Request $request, $id){
+        $product = $this->getProductWithId($id);
+        $product->quantity = $request->input('quantity');
+
+        if($product->save()) {
+            return new \App\Http\Resources\Product($product);
         }
     }
 }

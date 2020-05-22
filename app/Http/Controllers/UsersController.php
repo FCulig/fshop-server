@@ -77,7 +77,7 @@ class UsersController extends Controller
 
     public function getUsersProducts(Request $request, $id)
     {
-        $products = $this->getUserWithId($id)->products;
+        $products = $this->getUserWithId($id)->products->where('quantity', '>', 0);
         $productsResources = array();
         foreach ($products as $product) {
             $productsResources[] = new \App\Http\Resources\Product($product);
