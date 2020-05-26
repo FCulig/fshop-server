@@ -27,7 +27,14 @@ class CommentsController extends Controller
     }
 
     public function commentsOnProduct(Request $request, $id){
-        return Product::findOrFail($id)->comments;
+        $comments  = Product::findOrFail($id)->comments;
+        $commentsResource = array();
+
+        foreach ($comments as $comment){
+            $commentsResource[] = new \App\Http\Resources\Comment($comment);
+        }
+
+        return $commentsResource;
     }
 
     public function commentsOnProductFN($id){
