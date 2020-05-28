@@ -59,4 +59,18 @@ class CommentsController extends Controller
             return new \App\Http\Resources\Comment($comment);
         }
     }
+
+    public function latestCommentsOnUsersProducts($id){
+        $usersController = new UsersController;
+        $ids = $usersController->getUserWithId($id)->products->where('quantity', '>', 0)->pluck('id');
+
+        $comments = Comment::where('product_id', $ids)->orderBy('created_at', 'asc')->limit(5)->get();
+        $commentsResources = array();
+
+        foreach ($comments as $comment){
+            $commentsResources[] = new \App\Http\Resources\Comment($comment);
+        }
+
+        return $commentsResources;
+    }
 }
