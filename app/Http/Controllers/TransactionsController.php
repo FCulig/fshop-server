@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Cart;
 use App\Http\Requests\NewTransactionRequest;
 use App\Http\Resources\Transaction;
 use App\Transcation;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TransactionsController extends Controller
@@ -24,11 +24,15 @@ class TransactionsController extends Controller
     public function usersTransactions(Request $request, $id)
     {
         $transactionResources = array();
+        $transactions = User::findOrFail($id)->transactions;
 
         if ($request->exists('type')) {
-            $transactions = User::findOrFail($id)->transactions->where('status_id', $request->query('type'));
-        } else {
-            $transactions = User::findOrFail($id)->transactions;
+            $transactions = $transactions->where('status_id', $request->query('type'));
+        }
+
+        if ($request->exists('latest')) {
+            $date = Carbon::today()->subDays(7);
+            $transactions = $transactions->where('created_at', '>=', $date);
         }
 
         foreach ($transactions as $transaction) {

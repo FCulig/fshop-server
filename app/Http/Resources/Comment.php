@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Comment extends JsonResource
@@ -14,11 +15,12 @@ class Comment extends JsonResource
      */
     public function toArray($request)
     {
+
         return [
             'id' => $this->id,
             'user' => $this->user,
             'comment' => $this->comment,
-            'created_at' => $this->created_at,
+            'created_at' => Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d.m.Y H:i'),
             'updated_at' => $this->updated_at,
         ];
     }
