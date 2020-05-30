@@ -58,6 +58,7 @@ Route::put('roles/{id}', 'RolesController@update');
 Route::delete('roles/{id}', 'RolesController@destroy');
 
 Route::get('product', 'ProductsController@index');
+Route::get('product/home', 'ProductsController@homePageProducts');
 Route::post('product', 'ProductsController@store');
 Route::get('product/{id}', 'ProductsController@show');
 Route::post('product/{id}', 'ProductsController@update');

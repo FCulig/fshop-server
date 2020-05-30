@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\Transaction;
 use App\Product;
 use App\ProductImage;
+use App\Transcation;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -209,5 +210,27 @@ class ProductsController extends Controller
         }
 
         return $profit;
+    }
+
+    public function homePageProducts(Request $request)
+    {
+        $popular = Transcation::select('item_id', DB::raw('sum(quantity) as quantity'))
+            ->groupBy('item_id')
+            ->orderBy('quantity', 'desc')
+            ->limit(5)
+            ->get();
+        $popular = $this->addProducts($popular);
+
+        return response()->json([
+            "popular" => $popular
+        ]);
+    }
+
+    private function addProducts($transactions){
+        foreach ($transactions as $item){
+            $item->product = new \App\Http\Resources\Product(Product::findOrFail($item->item_id));
+        }
+
+        return $transactions;
     }
 }
