@@ -93,6 +93,7 @@ Route::put('users/{id}/promote', 'UsersController@promote');
 Route::put('users/{id}/demote', 'UsersController@demote');
 Route::get('users/{id}/products', 'UsersController@getUsersProducts');
 Route::get('users/{id}/latest-comments', 'CommentsController@latestCommentsOnUsersProducts');
+Route::get('users/{id}/profit', 'ProductsController@profit');
 Route::post('users/{id}', 'UsersController@update');
 Route::post('users/{userId}/buy/{productId}', 'UsersController@buyProduct');
 Route::delete('users/{id}', 'UsersController@destroy');
