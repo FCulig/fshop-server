@@ -75,6 +75,16 @@ class UsersController extends Controller
         }
     }
 
+    public function getAllUsersProducts($id)
+    {
+        $products = $this->getUserWithId($id)->products;
+        $productsResources = array();
+        foreach ($products as $product) {
+            $productsResources[] = new \App\Http\Resources\Product($product);
+        }
+        return $productsResources;
+    }
+
     public function getUsersProducts($id)
     {
         $products = $this->getUserWithId($id)->products->where('quantity', '>', 0);

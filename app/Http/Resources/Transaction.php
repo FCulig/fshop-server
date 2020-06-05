@@ -10,7 +10,7 @@ class Transaction extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
@@ -20,6 +20,7 @@ class Transaction extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'coupon' => $this->coupon,
             'product' => $product,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,

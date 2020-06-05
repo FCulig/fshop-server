@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Transaction;
+use App\Category;
+use App\Coupon;
 use App\Product;
 use App\ProductImage;
 use App\Transcation;
@@ -206,9 +207,15 @@ class ProductsController extends Controller
         $profit = (float)0;
         $productsController = new ProductsController;
         foreach ($transactions as $transaction) {
-            $profit = $profit + (int)$transaction->quantity * (float)$productsController->getProductWithId($transaction->item_id)->price;
+            $baseAmmount = (int)$transaction->quantity * (float)$productsController->getProductWithId($transaction->item_id)->price;
+            if ($transaction->coupon_id != null) {
+                $coupon = Coupon::findOrFail($transaction->coupon_id);
+                $percentage = $coupon->ammount / 100;
+                $profit = $profit + ($baseAmmount - ($baseAmmount * $percentage));
+            } else {
+                $profit = $profit + $baseAmmount;
+            }
         }
-
         return $profit;
     }
 
@@ -221,13 +228,34 @@ class ProductsController extends Controller
             ->get();
         $popular = $this->addProducts($popular);
 
-        return response()->json([
+        $response = [
             "popular" => $popular
-        ]);
+        ];
+
+        $categores = Category::all();
+        foreach ($categores as $cat) {
+            $products = $this->makeProductResources($cat->products->take(5));
+            if (sizeof($products) == 5) {
+                $response[$cat->name] = $products;
+            }
+        }
+
+        return response()->json($response);
     }
 
-    private function addProducts($transactions){
-        foreach ($transactions as $item){
+    private function makeProductResources($products)
+    {
+        $resources = array();
+        foreach ($products as $item) {
+            $resources[] = new \App\Http\Resources\Product($item);
+        }
+
+        return $resources;
+    }
+
+    private function addProducts($transactions)
+    {
+        foreach ($transactions as $item) {
             $item->product = new \App\Http\Resources\Product(Product::findOrFail($item->item_id));
         }
 

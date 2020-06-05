@@ -4,6 +4,12 @@
     <list default="true" id="133b8ec6-0a41-4e57-b178-b0cfb977a459" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TransactionsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TransactionsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/CartItem.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/CartItem.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Transaction.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/Transaction.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Transcation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Transcation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -223,6 +229,11 @@
       <workItem from="1590826128041" duration="5367000" />
       <workItem from="1590868855988" duration="535000" />
       <workItem from="1590869423516" duration="1674000" />
+      <workItem from="1590950553888" duration="7801000" />
+      <workItem from="1591050586538" duration="1462000" />
+      <workItem from="1591092596268" duration="3522000" />
+      <workItem from="1591127983402" duration="1913000" />
+      <workItem from="1591260863473" duration="5197000" />
     </task>
     <servers />
   </component>
@@ -260,17 +271,17 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="261" key="GridCell.Tab.0.right/0.0.1920.1040/1920.309.1360.728@0.0.1920.1040" timestamp="1584457785984" />
-    <state x="636" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1590869426944">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="848" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1591260960759">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="848" y="344" key="com.intellij.ide.util.TipDialog/-1920.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1589658885874" />
     <state x="636" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.309.1360.728@0.0.1920.1040" timestamp="1590869426944" />
-    <state x="848" y="344" key="com.intellij.ide.util.TipDialog/2560.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1590746854171" />
-    <state x="1087" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1590747641447">
+    <state x="848" y="344" key="com.intellij.ide.util.TipDialog/2560.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1591260960759" />
+    <state x="1087" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1590960176834">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="1087" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1588323608208" />
-    <state x="1087" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/2560.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1590747641447" />
+    <state x="1087" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/2560.0.1920.1040/0.0.2560.1040@0.0.2560.1040" timestamp="1590960176834" />
     <state x="707" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1590829257501">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

@@ -49,6 +49,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Comment', 'user_id', 'id');
     }
 
+    public function coupons()
+    {
+        return $this->hasMany('App\Coupon', 'user_id', 'id');
+    }
+
     public function products()
     {
         return $this->hasMany('App\Product', 'user_id', 'id');

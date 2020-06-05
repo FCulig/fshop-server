@@ -45,6 +45,11 @@ Route::get('statuses/{id}', 'TransactionStatusesController@show');
 Route::put('statuses/{id}', 'TransactionStatusesController@update');
 Route::delete('statuses/{id}', 'TransactionStatusesController@destroy');
 
+Route::get('coupons', 'CouponsController@index');
+Route::post('coupons', 'CouponsController@store');
+Route::get('coupons/{code}', 'CouponsController@show');
+Route::delete('coupons/{id}', 'CouponsController@destroy');
+
 Route::get('catrequests', 'CategoryRequestsController@index');
 Route::post('catrequests', 'CategoryRequestsController@store');
 Route::get('catrequests/{id}', 'CategoryRequestsController@show');
@@ -92,9 +97,10 @@ Route::get('users/{id}/orders', 'TransactionsController@usersOrders');
 Route::get('users/{id}/cart', 'UsersController@usersCart');
 Route::put('users/{id}/promote', 'UsersController@promote');
 Route::put('users/{id}/demote', 'UsersController@demote');
-Route::get('users/{id}/products', 'UsersController@getUsersProducts');
+Route::get('users/{id}/products', 'UsersController@getAllUsersProducts');
 Route::get('users/{id}/latest-comments', 'CommentsController@latestCommentsOnUsersProducts');
 Route::get('users/{id}/profit', 'ProductsController@profit');
+Route::get('users/{id}/coupons', 'CouponsController@usersCoupons');
 Route::post('users/{id}', 'UsersController@update');
 Route::post('users/{userId}/buy/{productId}', 'UsersController@buyProduct');
 Route::delete('users/{id}', 'UsersController@destroy');

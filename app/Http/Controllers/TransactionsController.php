@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Coupon;
 use App\Http\Requests\NewTransactionRequest;
 use App\Http\Resources\Transaction;
 use App\Transcation;
@@ -99,6 +100,8 @@ class TransactionsController extends Controller
         $productsController = new ProductsController;
         $items = $cartController->getCartByUser($request->input('user_id'))->items;
 
+        $usedCoupon = false;
+        $couponId = null;
         $transactions = array();
         foreach ($items as $item) {
             $transaction = new Transcation($request->all());
@@ -106,12 +109,26 @@ class TransactionsController extends Controller
             $transaction->status_id = 1;
             $transaction->quantity = $item->quantity;
 
+            if ($transaction->coupon->user_id != $item->product->user_id && $transaction->coupon->uses >= 1) {
+                $transaction->coupon = null;
+            } else {
+                $usedCoupon = true;
+                $couponId = $transaction->coupon->id;
+            }
+
             if ($transaction->save()) {
                 if ($productsController->buyProduct($transaction->item_id, $transaction->quantity)) {
-                    $transactions[] = $transaction;
+                    $transactions[] = new Transaction($transaction);
                     $cartItemsController->destroy($item->id);
                 }
             }
+        }
+
+        if ($usedCoupon) {
+            $coupon = Coupon::findOrFail($couponId);
+            $coupon->uses = $coupon->uses - 1;
+
+            $coupon->save();
         }
 
         return $transactions;

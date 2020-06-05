@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Transcation extends Model
 {
     protected $fillable = [
-        'first_name', 'last_name', 'user_id', 'address', 'city', 'country', 'zip_code',
+        'first_name', 'last_name', 'user_id', 'address', 'city', 'country', 'zip_code', 'coupon_id'
     ];
 
     public function product()
@@ -24,5 +24,10 @@ class Transcation extends Model
     public function status()
     {
         return $this->belongsTo('App\TransactionStatus', 'status_id', 'id');
+    }
+
+    public function coupon()
+    {
+        return $this->belongsTo('App\Coupon', 'coupon_id', 'id');
     }
 }
