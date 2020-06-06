@@ -109,7 +109,7 @@ class TransactionsController extends Controller
             $transaction->status_id = 1;
             $transaction->quantity = $item->quantity;
 
-            if ($transaction->coupon->user_id != $item->product->user_id && $transaction->coupon->uses >= 1) {
+            if ($item->coupon_id != null && $transaction->coupon->user_id != $item->product->user_id && $transaction->coupon->uses >= 1) {
                 $transaction->coupon = null;
             } else {
                 $usedCoupon = true;
