@@ -1,10 +1,9 @@
 @component('mail::message')
-    # Dobro došli u F Shop!
+    # Proizvod poslan!
 
-    {{$firstname}} {{$lastname}}, vaša registracija je uspješna!
+    Proizvod {{$productName}} je poslan!
 
 
     Hvala na povjerenju,
     Vaš {{ config('app.name') }}
 @endcomponent
-

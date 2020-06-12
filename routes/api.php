@@ -118,5 +118,13 @@ Route::get('/registrationmail', function(){
     Mail::to('email@email.com')->send(new RegistrationMail("Marko", "Markic"));
 });
 
+Route::get('/ordermail', function(){
+    Mail::to('email@email.com')->send(new \App\Mail\OrderedMail("Marko", "Markic", "Bikini", "2"));
+});
+
+Route::get('/shippedmail', function(){
+    Mail::to('email@email.com')->send(new \App\Mail\ShippedItemMail("Bikini"));
+});
+
 Route::get('/profilePicture/{name}', 'ImagesController@profilePicture');
 Route::get('/productImage/{id}', 'ImagesController@productImage');

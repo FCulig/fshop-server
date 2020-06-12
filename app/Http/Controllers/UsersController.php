@@ -7,12 +7,12 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\Cart;
 use App\Http\Resources\User as UserResource;
+use App\Mail\RegistrationMail;
 use App\PromotionRequest;
 use App\User;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use Validator;
 
 class UsersController extends Controller
@@ -180,8 +180,7 @@ class UsersController extends Controller
         if ($user->save()) {
             $cartController = new CartsController();
             $cartController->store($user->id);
-            //TODO: fix mailing
-            //Mail::to('email@email.com')->send(new RegistrationMail());
+            Mail::to('email@email.com')->send(new RegistrationMail($user->first_name, $user->last_name));
             return new UserResource($user);
         }
     }
@@ -193,7 +192,7 @@ class UsersController extends Controller
                 $user = User::findOrFail(Auth::guard('api')->user()->id);
                 $user->password = bcrypt($request->password);
 
-                if($user->save()) {
+                if ($user->save()) {
                     return $user;
                 }
             } else {
@@ -202,8 +201,6 @@ class UsersController extends Controller
         } else {
             return "Nije loginan";
         }
-        //return redirect()->to('/')->with('alert-success','Password changed successfully !');
-        //return $request->all();
     }
 
     public function promote($id)

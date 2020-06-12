@@ -11,6 +11,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ProductsController extends Controller
 {
@@ -159,13 +160,14 @@ class ProductsController extends Controller
         }
     }
 
-    public function buyProduct($productId, $quantity)
+    public function buyProduct($productId, $quantity, $user)
     {
         $product = $this->getProductWithId($productId);
 
         if ($product->quantity >= $quantity) {
             $product->quantity = $product->quantity - $quantity;
             if ($product->save()) {
+                Mail::to('email@email.com')->send(new \App\Mail\OrderedMail($user->first_name, $user->last_name, $product->name, $quantity));
                 return true;
             }
         } else {
