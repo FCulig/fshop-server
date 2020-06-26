@@ -28,7 +28,7 @@ class CouponsController extends Controller
     {
         $exists = Coupon::where('code', $request->code)->get();
 
-        if ($exists == null) {
+        if (sizeof($exists) == 0) {
             $coupon = new Coupon($request->all());
 
             if ($coupon->save()) {

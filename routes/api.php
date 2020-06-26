@@ -47,9 +47,16 @@ Route::middleware('auth:api')->group(function(){
 
     Route::post('product', 'ProductsController@store');
     Route::post('product/{id}', 'ProductsController@update');
+    Route::delete('product/{id}', 'ProductsController@destroy');
     Route::post('product/{id}/comments', 'CommentsController@store');
     Route::delete('comments/{id}', 'CommentsController@destroy');
     Route::get('comments/{id}', 'CommentsController@show');
+    Route::post('product/{id}/comments', 'CommentsController@store');
+    Route::delete('comments/{id}', 'CommentsController@destroy');
+    Route::get('comments/{id}', 'CommentsController@show');
+    Route::put('product/{id}/restock', 'ProductsController@restock');
+    Route::post('product/{productId}/cart/{cartId}', 'CartItemsController@store');
+    Route::delete('product/{id}', 'ProductsController@destroy');
 
     Route::post('promotion', 'PromotionRequestsController@store');
     Route::put('promotion/{id}', 'PromotionRequestsController@update');

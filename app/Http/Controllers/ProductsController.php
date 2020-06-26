@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Comment;
 use App\Coupon;
 use App\Product;
 use App\ProductImage;
@@ -133,9 +134,16 @@ class ProductsController extends Controller
     {
         $product = Product::findOrFail($id);
 
+        //TODO: NE RADI DOBRO
         if ($product->delete()) {
             $productImagesController = new ProductImagesController;
             $productImagesController->deleteImages($id);
+
+            $comments = Comment::where('product_id', $id)->get();
+            if (!empty($comments)) {
+                Comment::where('product_id', $id)->delete();
+            }
+
             return new \App\Http\Resources\Product($product);
         }
     }
@@ -226,7 +234,6 @@ class ProductsController extends Controller
         $popular = Transcation::select('item_id', DB::raw('sum(quantity) as quantity'))
             ->groupBy('item_id')
             ->orderBy('quantity', 'desc')
-            ->limit(5)
             ->get();
         $popular = $this->addProducts($popular);
 
@@ -236,7 +243,7 @@ class ProductsController extends Controller
 
         $categores = Category::all();
         foreach ($categores as $cat) {
-            $products = $this->makeProductResources($cat->products->take(5));
+            $products = $this->makeProductResources($cat->products);
             if (sizeof($products) == 5) {
                 $response[$cat->name] = $products;
             }
@@ -249,7 +256,9 @@ class ProductsController extends Controller
     {
         $resources = array();
         foreach ($products as $item) {
-            $resources[] = new \App\Http\Resources\Product($item);
+            if(sizeof($resources) != 5){
+                $resources[] = new \App\Http\Resources\Product($item);
+            }
         }
 
         return $resources;
@@ -257,10 +266,21 @@ class ProductsController extends Controller
 
     private function addProducts($transactions)
     {
+        $cnt = 0;
+        $trans = array();
         foreach ($transactions as $item) {
-            $item->product = new \App\Http\Resources\Product(Product::findOrFail($item->item_id));
+            if($cnt < 5){
+                $tmp = new \App\Http\Resources\Product(Product::findOrFail($item->item_id));
+                if($tmp->quantity > 0){
+                    $item->product = $tmp;
+                    $trans[] = $item;
+                    $cnt++;
+                }
+            }else{
+                break;
+            }
         }
 
-        return $transactions;
+        return $trans;
     }
 }

@@ -62,9 +62,8 @@ class CommentsController extends Controller
 
     public function latestCommentsOnUsersProducts($id){
         $usersController = new UsersController;
-        $ids = $usersController->getUserWithId($id)->products->where('quantity', '>', 0)->pluck('id');
-
-        $comments = Comment::where('product_id', $ids)->orderBy('created_at', 'asc')->limit(5)->get();
+        $ids = $usersController->getUserWithId($id)->products->pluck('id');
+        $comments = Comment::whereIn('product_id', $ids)->orderBy('created_at', 'asc')->limit(5)->get();
         $commentsResources = array();
 
         foreach ($comments as $comment){

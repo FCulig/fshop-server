@@ -225,7 +225,7 @@ class UsersController extends Controller
     {
         $promotrionRequests = PromotionRequest::all()->where('user_id', $id);
 
-        if (sizeof($promotrionRequests) > 0 && User::findOrFail($id)->number_sold_items > 10) {
+        if (sizeof($promotrionRequests) == 0 && sizeof(\App\User::findOrFail($id)->transactions->where('status_id', 3)) >= 10) {
             return "true";
         } else {
             return "false";

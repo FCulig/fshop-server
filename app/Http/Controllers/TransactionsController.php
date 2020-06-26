@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Coupon;
 use App\Http\Requests\NewTransactionRequest;
 use App\Http\Resources\Transaction;
+use App\Product;
 use App\Transcation;
 use App\User;
 use Carbon\Carbon;
@@ -49,7 +50,10 @@ class TransactionsController extends Controller
         $transaction = Transcation::findOrFail($id);
         $transaction->status_id = 4;
 
-        if ($transaction->save()) {
+        $product = Product::findOrFail($transaction->item_id);
+        $product->quantity = $product->quantity + $transaction->quantity;
+
+        if ($transaction->save() && $product->save()) {
             return new Transaction($transaction);
         }
     }
